@@ -4,33 +4,40 @@ from datetime import datetime
 folder = ""
 J_folder = ""
 count = 0
+j = 0
 
-for i in range(0, 11, 1):
-    # get the current date and time
-    x = datetime.now()
-    # let's create our path where we want it to be located
-    parent_dir = "E:/opencvproject/workbook/"
-    folder = parent_dir
-    # let's create our directory/folder
-    directory = x.strftime(f'{"%d-%m-%Y-"}{i}{".txt"}')  # "workbook"
-    # path
+parent_dir = "E:/opencvproject/"
+directory = "workbook"
+parent_dir0 = "".join([parent_dir, directory])
+
+if os.path.exists(parent_dir0):
+
+    print("file already existed")
+    for i in range(0, 11, 1):
+
+        x = datetime.now()
+        directory_1 = x.strftime(f'{"%d-%m-%Y-"}{i}{".txt"}')  # "workbook"
+        path = os.path.join(parent_dir0, directory_1)
+        J_folder = path
+
+        try:
+
+            with open(path, 'x') as fp:
+                pass
+        except OSError as error:
+            break
+            # print("all files have been created", i)
+
+else:
+
+    # directory = ""
     path = os.path.join(parent_dir, directory)
-    J_folder = path
+    os.makedirs(path)
+    print("Directory '% s' created" % directory)
 
-    try:
-        # let's create it
-        # os.makedirs(path)
-        print("Directory '% s' created" % directory)
-    except OSError as error:
-        print("file already existed")
 
-    with open(path, 'x') as fp:
-        pass
-
-print("all files have been created", i)
-
-for j in os.listdir(folder):
+for j in os.listdir(parent_dir0):
     if os.path.isfile(J_folder):
         count += 1
-print('number of file', count)
+print(f"number of file in the directory:'{parent_dir0}' is ", count)
 
